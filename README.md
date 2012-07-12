@@ -8,7 +8,18 @@ the app (typically based on Node.js) boots up (i.e. on deploy of new code).
 
 ## Usage
 
-See migration.js
+```
+var Sequelize = require('sequelize'); // load Sequelize.js
+var sequelize = new Sequelize(...your-mysql-config-here...); // create a Sequelize instance (connection)
+
+var Migration = require('migration.js')(sequelize); // Load this library using your Sequelize instance
+
+Migration.bootstrap(function() { // Make sure the Migration library schema is loaded
+  Migration.runOnce("Articles_author_id_fk", "ALTER TABLE Articles ADD CONSTRAINT Articles_author_id_fk FOREIGN KEY (author_id) REFERENCES Accounts(id)");
+});
+```
+
+For more details, see migration.js.
 
 ## License
 
